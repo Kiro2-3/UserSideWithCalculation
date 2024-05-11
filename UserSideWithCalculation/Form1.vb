@@ -4,7 +4,20 @@
     Dim dbFunc As New DatabaseFunctions
     Dim shiftStarted As Boolean = False
     Dim shiftStartTime As DateTime
-    Dim employeeID As String = "9" ' Set your employee ID here
+    Dim employeeID As String = "9"
+
+    Public Sub New(ByVal userID As String)
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        employeeID = userID
+
+        ' Hide minimize, maximize, and close buttons
+        Me.MinimizeBox = False
+        Me.MaximizeBox = False
+        Me.ControlBox = False
+    End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.StartPosition = FormStartPosition.CenterScreen
@@ -13,7 +26,6 @@
         If dbConn.TestDatabaseConnection Then
             MessageBox.Show("Successfully connected to the database.")
 
-            ' Start the shift timer
             StartShift()
         End If
     End Sub
@@ -23,7 +35,6 @@
         shiftStartTime = DateTime.Now
         EndShiftButton.Enabled = True
 
-        ' Start a timer to track shift duration
         Timer1.Start()
     End Sub
 
@@ -56,5 +67,15 @@
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Dim shiftDuration As TimeSpan = DateTime.Now - shiftStartTime
         SalaryValue.Text = "Shift Duration: " & shiftDuration.ToString("hh\:mm\:ss")
+    End Sub
+
+    Private Sub CloseButton_Click(sender As Object, e As EventArgs) Handles CloseButton.Click
+        If shiftStarted Then
+            ' If the shift has started but not ended, minimize the application
+            Me.WindowState = FormWindowState.Minimized
+        Else
+            ' If the shift hasn't started or has ended, exit the application
+            Application.Exit()
+        End If
     End Sub
 End Class

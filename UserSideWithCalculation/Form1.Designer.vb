@@ -27,6 +27,7 @@ Partial Class Form1
         SalaryValue = New Label()
         EndShiftButton = New Button()
         Timer1 = New Timer(components)
+        CloseButton = New Button()
         SuspendLayout()
         ' 
         ' Total_Hours
@@ -56,14 +57,30 @@ Partial Class Form1
         EndShiftButton.Text = "EndShift"
         EndShiftButton.UseVisualStyleBackColor = True
         ' 
+        ' Timer1
+        ' 
+        ' 
+        ' CloseButton
+        ' 
+        CloseButton.Location = New Point(303, 12)
+        CloseButton.Name = "CloseButton"
+        CloseButton.Size = New Size(49, 23)
+        CloseButton.TabIndex = 3
+        CloseButton.Text = "X"
+        CloseButton.UseVisualStyleBackColor = True
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(364, 186)
+        ControlBox = False
+        Controls.Add(CloseButton)
         Controls.Add(EndShiftButton)
         Controls.Add(SalaryValue)
         Controls.Add(Total_Hours)
+        MaximizeBox = False
+        MinimizeBox = False
         Name = "Form1"
         Text = "Main UI"
         ResumeLayout(False)
@@ -74,5 +91,6 @@ Partial Class Form1
     Friend WithEvents SalaryValue As Label
     Friend WithEvents EndShiftButton As Button
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents CloseButton As Button
 
 End Class

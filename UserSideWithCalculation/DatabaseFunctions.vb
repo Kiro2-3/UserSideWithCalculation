@@ -4,7 +4,7 @@ Public Class DatabaseFunctions
     Dim connectionString As String = "server=localhost;user=root;database=cdmips;port=3306;password="
 
     Public Sub InsertTotalDailyHours(ByVal id As String, ByVal shiftDate As Date, ByVal totalDailyHours As Double)
-        Dim query As String = "INSERT INTO userTime (ID, ShiftDate, DailyHours) VALUES (@id, @shiftDate, @totalDailyHours)"
+        Dim query As String = "INSERT INTO usertime (ID, ShiftDate, DailyHours) VALUES (@id, @shiftDate, @totalDailyHours)"
 
         Try
             Using conn As New MySqlConnection(connectionString)
