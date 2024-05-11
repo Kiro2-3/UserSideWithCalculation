@@ -7,13 +7,10 @@
     Dim employeeID As String = "9"
 
     Public Sub New(ByVal userID As String)
-        ' This call is required by the designer.
         InitializeComponent()
 
-        ' Add any initialization after the InitializeComponent() call.
         employeeID = userID
 
-        ' Hide minimize, maximize, and close buttons
         Me.MinimizeBox = False
         Me.MaximizeBox = False
         Me.ControlBox = False
@@ -71,10 +68,8 @@
 
     Private Sub CloseButton_Click(sender As Object, e As EventArgs) Handles CloseButton.Click
         If shiftStarted Then
-            ' If the shift has started but not ended, minimize the application
             Me.WindowState = FormWindowState.Minimized
         Else
-            ' If the shift hasn't started or has ended, exit the application
             Application.Exit()
         End If
     End Sub
