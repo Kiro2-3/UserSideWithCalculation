@@ -1,38 +1,88 @@
 ﻿Imports MySql.Data.MySqlClient
 
 Public Class DatabaseFunctions
-    Public Function GetIDAndTotalHours(ByVal id As String) As (String, Decimal)
-        Dim totalHours As Decimal = 0
-        Dim dbConn As New DatabaseConnection
+    Dim connectionString As String = "server=localhost;user=root;database=cdmips;port=3306;password="
 
-        Dim connectionString As String = "server=localhost;user=root;database=cdmips;port=3306;password="
-
-        Dim query As String = "SELECT ID, SUM(DailyHours) AS TotalHours FROM usertime WHERE ID = @id GROUP BY ID"
+    Public Sub InsertTotalDailyHours(ByVal id As String, ByVal shiftDate As Date, ByVal totalDailyHours As Double)
+        Dim query As String = "INSERT INTO userTime (ID, ShiftDate, DailyHours) VALUES (@id, @shiftDate, @totalDailyHours)"
 
         Try
-            If dbConn.TestDatabaseConnection() Then
-                Using connection As New MySqlConnection(connectionString)
-                    connection.Open()
+            Using conn As New MySqlConnection(connectionString)
+                conn.Open()
+                Using cmd As New MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@id", id)
+                    cmd.Parameters.AddWithValue("@shiftDate", shiftDate)
+                    cmd.Parameters.AddWithValue("@totalDailyHours", totalDailyHours)
+                    cmd.ExecuteNonQuery()
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        End Try
+    End Sub
 
-                    Using command As New MySqlCommand(query, connection)
-                        command.Parameters.AddWithValue("@id", id)
+    Public Sub StoreDailySalary(ByVal id As String, ByVal salaryDate As Date, ByVal dailySalary As Decimal)
+        Dim query As String = "INSERT INTO salary_info (id, salary_date, daily_salary) VALUES (@id, @salaryDate, @dailySalary)"
 
-                        Dim reader As MySqlDataReader = command.ExecuteReader()
+        Try
+            Using conn As New MySqlConnection(connectionString)
+                conn.Open()
+                Using cmd As New MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@id", id)
+                    cmd.Parameters.AddWithValue("@salaryDate", salaryDate)
+                    cmd.Parameters.AddWithValue("@dailySalary", dailySalary)
+                    cmd.ExecuteNonQuery()
 
-                        If reader.Read() Then
-                            Dim extractedID As String = reader("ID").ToString()
-                            totalHours = If(reader("TotalHours") IsNot DBNull.Value, Convert.ToDecimal(reader("TotalHours")), 0)
+                    ' Check if it's the last day of the month
+                    If salaryDate.Day = DateTime.DaysInMonth(salaryDate.Year, salaryDate.Month) Then
+                        UpdateMonthlySalary(id, salaryDate.Month, salaryDate.Year) ' Pass the year as well
+                    End If
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        End Try
+    End Sub
 
-                            Return (extractedID, totalHours)
-                        End If
+
+
+    Public Sub UpdateMonthlySalary(ByVal id As String, ByVal month As Integer, ByVal year As Integer)
+
+        Dim totalMonthlySalary As Decimal = 0
+
+        Dim startDate As New Date(year, month, 1)
+        Dim endDate As Date = startDate.AddMonths(1).AddDays(-1)
+
+        Dim query As String = "SELECT daily_salary FROM salary_info WHERE id = @id AND salary_date >= @startDate AND salary_date <= @endDate"
+
+        Try
+            Using conn As New MySqlConnection(connectionString)
+                conn.Open()
+                Using cmd As New MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@id", id)
+                    cmd.Parameters.AddWithValue("@startDate", startDate)
+                    cmd.Parameters.AddWithValue("@endDate", endDate)
+
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            totalMonthlySalary += Convert.ToDecimal(reader("daily_salary"))
+                        End While
                     End Using
                 End Using
-            End If
-        Catch ex As Exception
-            MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
 
-        Return (String.Empty, 0)
-    End Function
+                Dim updateQuery As String = "UPDATE salary_info SET monthly_salary = @totalMonthlySalary WHERE id = @id AND MONTH(salary_date) = @month AND YEAR(salary_date) = @year"
+
+                Using cmd As New MySqlCommand(updateQuery, conn)
+                    cmd.Parameters.AddWithValue("@totalMonthlySalary", totalMonthlySalary)
+                    cmd.Parameters.AddWithValue("@id", id)
+                    cmd.Parameters.AddWithValue("@month", month)
+                    cmd.Parameters.AddWithValue("@year", year)
+                    cmd.ExecuteNonQuery()
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        End Try
+    End Sub
 
 End Class

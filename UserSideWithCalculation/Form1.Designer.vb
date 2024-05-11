@@ -22,14 +22,17 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         Total_Hours = New Label()
         SalaryValue = New Label()
+        EndShiftButton = New Button()
+        Timer1 = New Timer(components)
         SuspendLayout()
         ' 
         ' Total_Hours
         ' 
         Total_Hours.AutoSize = True
-        Total_Hours.Location = New Point(12, 19)
+        Total_Hours.Location = New Point(47, 54)
         Total_Hours.Name = "Total_Hours"
         Total_Hours.Size = New Size(97, 15)
         Total_Hours.TabIndex = 0
@@ -38,17 +41,27 @@ Partial Class Form1
         ' SalaryValue
         ' 
         SalaryValue.AutoSize = True
-        SalaryValue.Location = New Point(126, 68)
+        SalaryValue.Location = New Point(142, 101)
         SalaryValue.Name = "SalaryValue"
-        SalaryValue.Size = New Size(41, 15)
+        SalaryValue.Size = New Size(109, 15)
         SalaryValue.TabIndex = 1
-        SalaryValue.Text = "Label1"
+        SalaryValue.Text = "Shift still not ended"
+        ' 
+        ' EndShiftButton
+        ' 
+        EndShiftButton.Location = New Point(176, 12)
+        EndShiftButton.Name = "EndShiftButton"
+        EndShiftButton.Size = New Size(75, 23)
+        EndShiftButton.TabIndex = 2
+        EndShiftButton.Text = "EndShift"
+        EndShiftButton.UseVisualStyleBackColor = True
         ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(364, 186)
+        Controls.Add(EndShiftButton)
         Controls.Add(SalaryValue)
         Controls.Add(Total_Hours)
         Name = "Form1"
@@ -59,5 +72,7 @@ Partial Class Form1
 
     Friend WithEvents Total_Hours As Label
     Friend WithEvents SalaryValue As Label
+    Friend WithEvents EndShiftButton As Button
+    Friend WithEvents Timer1 As Timer
 
 End Class
