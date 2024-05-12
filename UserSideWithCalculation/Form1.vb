@@ -4,7 +4,7 @@
     Dim dbFunc As New DatabaseFunctions
     Dim shiftStarted As Boolean = False
     Dim shiftStartTime As DateTime
-    Dim employeeID As String = "9"
+    Dim employeeID As String = ""
 
     Public Sub New(ByVal userID As String)
         InitializeComponent()
