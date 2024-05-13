@@ -1,5 +1,5 @@
-﻿Imports MySql.Data.MySqlClient
-Imports System.IO
+﻿Imports System.Globalization
+Imports System.Windows.Forms
 
 Public Class Form1
     Private dbConn As New DatabaseConnection
@@ -10,14 +10,16 @@ Public Class Form1
     Private loggedInShiftStartTime As DateTime
     Private originalLoggedInShiftStartTime As DateTime
     Private employeeID As String = ""
+    Private schedule As String = ""
     Dim login As New Login
 
     Private Shared instances As New Dictionary(Of String, Form1)
 
-    Public Sub New(ByVal userID As String)
+    Public Sub New(ByVal userID As String, ByVal userSchedule As String)
         InitializeComponent()
 
         employeeID = userID
+        schedule = userSchedule
 
         Me.MinimizeBox = False
         Me.MaximizeBox = False
@@ -28,14 +30,13 @@ Public Class Form1
         login.Show()
         Me.WindowState = FormWindowState.Minimized
         login.WindowState = FormWindowState.Normal
-
     End Sub
 
-    Public Shared Function GetInstance(ByVal userID As String) As Form1
+    Public Shared Function GetInstance(ByVal userID As String, ByVal userSchedule As String) As Form1
         If instances.ContainsKey(userID) Then
             Return instances(userID)
         Else
-            Dim newInstance As New Form1(userID)
+            Dim newInstance As New Form1(userID, userSchedule)
             instances.Add(userID, newInstance)
             Return newInstance
         End If
@@ -95,9 +96,31 @@ Public Class Form1
         If dbConn.TestDatabaseConnection Then
             MessageBox.Show("Successfully connected to the database.")
 
-            loggedInShiftStartTime = DateTime.Now
-            originalLoggedInShiftStartTime = loggedInShiftStartTime
-            StartShift()
+            Dim currentTime As DateTime = DateTime.Now
+            Dim scheduleParts As String() = schedule.Split(" to ")
+            If scheduleParts.Length = 2 Then
+                Dim scheduleStart As DateTime
+                Dim scheduleEnd As DateTime
+
+                If DateTime.TryParseExact(scheduleParts(0), "h:mmtt", Nothing, DateTimeStyles.None, scheduleStart) Then
+                    If DateTime.TryParseExact(scheduleParts(1), "h:mmtt", Nothing, DateTimeStyles.None, scheduleEnd) Then
+                        If currentTime >= scheduleStart AndAlso currentTime <= scheduleEnd Then
+
+                            loggedInShiftStartTime = DateTime.Now
+                            originalLoggedInShiftStartTime = loggedInShiftStartTime
+                            StartShift()
+                        Else
+                            MessageBox.Show("You are logging in outside your scheduled shift. Shift won't start.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        End If
+                    Else
+                        MessageBox.Show("Error parsing end time of the schedule.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                Else
+                    MessageBox.Show("Error parsing start time of the schedule.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            Else
+                MessageBox.Show("Invalid schedule format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
         End If
     End Sub
 

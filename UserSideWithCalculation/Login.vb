@@ -1,4 +1,5 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports System.Windows.Forms
 
 Public Class Login
     Private Sub LoginButton_Click(sender As Object, e As EventArgs) Handles LoginButton.Click
@@ -17,17 +18,20 @@ Public Class Login
             Using connection = New MySqlConnection(connectionString)
                 connection.Open()
 
-                Dim query As String = "SELECT id FROM users WHERE username = @username AND password = @password"
+                Dim query As String = "SELECT id, schedule FROM users WHERE username = @username AND password = @password"
                 Using cmd As New MySqlCommand(query, connection)
                     cmd.Parameters.AddWithValue("@username", username)
                     cmd.Parameters.AddWithValue("@password", password)
 
-                    Dim userID As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+                    Dim reader As MySqlDataReader = cmd.ExecuteReader()
 
-                    If userID > 0 Then
-                        MessageBox.Show("Login successful! User ID: " & userID.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    If reader.Read() Then
+                        Dim userID As Integer = reader.GetInt32("id")
+                        Dim userSchedule As String = reader.GetString("schedule")
 
-                        Dim form1 As New Form1(userID)
+                        MessageBox.Show("Login successful! User ID: " & userID.ToString() & vbCrLf & "Schedule: " & userSchedule, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        Dim form1 As New Form1(userID.ToString(), userSchedule)
                         form1.Show()
                         Me.Hide()
                     Else

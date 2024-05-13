@@ -3,6 +3,41 @@
 Public Class DatabaseFunctions
     Dim connectionString As String = "server=localhost;user=root;database=cdmips;port=3306;password="
 
+    Public Function TestDatabaseConnection() As Boolean
+        Try
+            Using connection = New MySqlConnection(connectionString)
+                connection.Open()
+                Return True
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error connecting to the database: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+    End Function
+
+    Public Function GetUserSchedule(employeeID As String) As String
+        Dim schedule As String = ""
+
+        Try
+            Using connection As New MySqlConnection(connectionString)
+                connection.Open()
+
+                Dim query As String = "SELECT Schedule FROM users WHERE id = @employeeID"
+                Using cmd As New MySqlCommand(query, connection)
+                    cmd.Parameters.AddWithValue("@employeeID", employeeID)
+
+                    Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                    If reader.Read() Then
+                        schedule = reader("Schedule").ToString()
+                    End If
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error retrieving user schedule: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Return schedule
+    End Function
     Public Sub InsertTotalDailyHours(ByVal id As String, ByVal shiftDate As Date, ByVal totalDailyHours As Double)
         Dim query As String = "INSERT INTO usertime (ID, ShiftDate, DailyHours) VALUES (@id, @shiftDate, @totalDailyHours)"
 
