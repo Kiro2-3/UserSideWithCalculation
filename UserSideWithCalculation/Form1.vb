@@ -1,5 +1,8 @@
-﻿Imports System.Globalization
+﻿Imports MySql.Data.MySqlClient
+
+Imports System.Globalization
 Imports System.Windows.Forms
+
 
 Public Class Form1
     Private dbConn As New DatabaseConnection
@@ -12,6 +15,7 @@ Public Class Form1
     Private employeeID As String = ""
     Private schedule As String = ""
     Dim login As New Login
+    Private connectionString As String = "server=localhost;user=root;database=cdmips;port=3306;password="
 
     Private Shared instances As New Dictionary(Of String, Form1)
 
@@ -96,6 +100,9 @@ Public Class Form1
         If dbConn.TestDatabaseConnection Then
             MessageBox.Show("Successfully connected to the database.")
 
+            ' Load the first name into Label1
+            LoadFirstNameIntoLabel()
+
             Dim currentTime As DateTime = DateTime.Now
             Dim scheduleParts As String() = schedule.Split(" to ")
             If scheduleParts.Length = 2 Then
@@ -124,7 +131,41 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub LoadFirstNameIntoLabel()
+        Dim query As String = "SELECT first_name FROM users WHERE id = @id"
+        Try
+            Using conn As New MySqlConnection(connectionString)
+                conn.Open()
+                Using cmd As New MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@id", employeeID)
+                    Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                    If reader.Read() Then
+                        Label1.Text = reader("first_name").ToString()
+                    Else
+                        Label1.Text = "No user found."
+                    End If
+                End Using
+            End Using
+        Catch ex As MySqlException
+            MessageBox.Show("MySQL Error: " & ex.Message)
+        Catch ex As Exception
+            MessageBox.Show("Error loading user: " & ex.Message)
+        End Try
+    End Sub
+
     Private Sub LogoutButton_Click(sender As Object, e As EventArgs) Handles LogoutButton.Click
         Logout()
+    End Sub
+
+    Private Sub PictureBox5_Click(sender As Object, e As EventArgs) Handles PictureBox5.Click
+
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
     End Sub
 End Class
