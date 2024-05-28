@@ -85,7 +85,7 @@ Public Class Form1
         SalaryValue.Text = "Shift Duration: " & shiftDuration.ToString("hh\:mm\:ss")
     End Sub
 
-    Private Sub CloseButton_Click(sender As Object, e As EventArgs) Handles CloseButton.Click
+    Private Sub PictureBox7_Click(sender As Object, e As EventArgs) Handles PictureBox7.Click
         If Application.OpenForms.OfType(Of Form1)().Count() = 1 Then
             Application.Exit()
         Else
@@ -165,7 +165,4 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-
-    End Sub
 End Class
