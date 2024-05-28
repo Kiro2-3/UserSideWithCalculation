@@ -44,4 +44,7 @@ Public Class Login
         End Try
     End Sub
 
+    Private Sub PictureBox7_Click(sender As Object, e As EventArgs) Handles PictureBox7.Click
+        Application.Exit()
+    End Sub
 End Class
