@@ -16,8 +16,10 @@ Public Class Form1
     Private schedule As String = ""
     Dim login As New Login
     Private connectionString As String = "server=localhost;user=root;database=cdmips;port=3306;password="
+    Dim topMostForm As Form = CType(Application.OpenForms(0), Form)
 
     Private Shared instances As New Dictionary(Of String, Form1)
+
 
     Public Sub New(ByVal userID As String, ByVal userSchedule As String)
         InitializeComponent()
@@ -72,24 +74,7 @@ Public Class Form1
             shiftStarted = False
             EndShiftButton.Enabled = False
         Else
-            MessageBox.Show("Shift has not started yet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End If
-    End Sub
-
-    Private Sub EndShiftButton_Click(sender As Object, e As EventArgs) Handles EndShiftButton.Click
-        EndShift()
-    End Sub
-
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        Dim shiftDuration As TimeSpan = DateTime.Now - shiftStartTime ' Use adjusted shift start time
-        SalaryValue.Text = "Shift Duration: " & shiftDuration.ToString("hh\:mm\:ss")
-    End Sub
-
-    Private Sub CloseButton_Click(sender As Object, e As EventArgs) Handles CloseButton.Click
-        If Application.OpenForms.OfType(Of Form1)().Count() = 1 Then
-            Application.Exit()
-        Else
-            Me.Close()
+            MessageBox.Show(Me, "Shift has not started yet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
 
@@ -98,7 +83,7 @@ Public Class Form1
         dbConn.TestDatabaseConnection()
 
         If dbConn.TestDatabaseConnection Then
-            MessageBox.Show("Successfully connected to the database.")
+            MessageBox.Show(Me, "SUCCESSFULLY CONNECTED TO DATABASE", "Caption", MessageBoxButtons.OK)
 
             ' Load the first name into Label1
             LoadFirstNameIntoLabel()
@@ -117,16 +102,16 @@ Public Class Form1
                             originalLoggedInShiftStartTime = loggedInShiftStartTime
                             StartShift()
                         Else
-                            MessageBox.Show("You are logging in outside your scheduled shift. Shift won't start.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            MessageBox.Show(Me, "You are logging in outside your scheduled shift. Shift won't start.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                         End If
                     Else
-                        MessageBox.Show("Error parsing end time of the schedule.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        MessageBox.Show(Me, "Error parsing end time of the schedule.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End If
                 Else
-                    MessageBox.Show("Error parsing start time of the schedule.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show(Me, "Error parsing start time of the schedule.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
             Else
-                MessageBox.Show("Invalid schedule format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show(Me, "Invalid schedule format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End If
     End Sub

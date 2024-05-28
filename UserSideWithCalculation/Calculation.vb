@@ -4,6 +4,7 @@
         Const overtimeHourlyRate As Decimal = regularHourlyRate * 1.5
         Const regularHoursPerWeek As Decimal = 40
 
+
         Dim regularPay As Decimal = 0
         Dim overtimePay As Decimal = 0
         Dim grossPay As Decimal = 0
