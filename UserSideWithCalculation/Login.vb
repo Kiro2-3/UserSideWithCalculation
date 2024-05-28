@@ -18,7 +18,7 @@ Public Class Login
             Using connection = New MySqlConnection(connectionString)
                 connection.Open()
 
-                Dim query As String = "SELECT id, schedule FROM users WHERE username = @username AND password = @password"
+                Dim query As String = "SELECT id, schedule FROM users WHERE username = @username AND password_hash = password_hash"
                 Using cmd As New MySqlCommand(query, connection)
                     cmd.Parameters.AddWithValue("@username", username)
                     cmd.Parameters.AddWithValue("@password", password)

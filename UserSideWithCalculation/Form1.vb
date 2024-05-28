@@ -60,23 +60,21 @@ Public Class Form1
         If shiftStarted Then
             Timer1.Stop()
 
-            Dim totalHours As Decimal = (DateTime.Now - shiftStartTime).TotalHours
+            Dim totalSeconds As Double = (DateTime.Now - shiftStartTime).TotalSeconds
 
-            Dim dailyPay As Decimal = calc.CalculateSalaryWithDeductions(totalHours)
+            Dim totalHours As Integer = CInt(Math.Floor(totalSeconds / 3600))
+            Dim totalMinutes As Integer = CInt(Math.Floor((totalSeconds - (totalHours * 3600)) / 60))
+            Dim remainingSeconds As Integer = CInt(totalSeconds - (totalHours * 3600) - (totalMinutes * 60))
 
-            dbFunc.InsertTotalDailyHours(employeeID, DateTime.Now.Date, totalHours)
+            SalaryValue.Text = $"{totalHours} hours, {totalMinutes} minutes, {remainingSeconds} seconds"
 
-            Dim salaryDate As Date = DateTime.Now.Date
-            dbFunc.StoreDailySalary(employeeID, salaryDate, dailyPay)
+            dbFunc.InsertTotalDailyHours(employeeID, DateTime.Now.Date, totalSeconds)
 
-            dbFunc.UpdateMonthlySalary(employeeID, salaryDate.Month, salaryDate.Year)
-
-            shiftStarted = False
-            EndShiftButton.Enabled = False
         Else
             MessageBox.Show(Me, "Shift has not started yet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
+
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.StartPosition = FormStartPosition.CenterScreen
@@ -144,9 +142,6 @@ Public Class Form1
 
 
 
-    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
-
-    End Sub
 
     Private Sub PictureBox7_Click(sender As Object, e As EventArgs) Handles PictureBox7.Click
         Application.Exit()
@@ -154,5 +149,9 @@ Public Class Form1
 
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
         Me.WindowState = FormWindowState.Minimized
+    End Sub
+
+    Private Sub EndShiftButton_Click(sender As Object, e As EventArgs) Handles EndShiftButton.Click
+        EndShift()
     End Sub
 End Class
