@@ -74,27 +74,7 @@ Public Class Form1
             shiftStarted = False
             EndShiftButton.Enabled = False
         Else
-            MessageBox.Show("Shift has not started yet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            topMostForm.TopMost = True
-            MessageBox.Show(topMostForm, "Your message", "Caption", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            topMostForm.TopMost = False
-        End If
-    End Sub
-
-    Private Sub EndShiftButton_Click(sender As Object, e As EventArgs) Handles EndShiftButton.Click
-        EndShift()
-    End Sub
-
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        Dim shiftDuration As TimeSpan = DateTime.Now - shiftStartTime ' Use adjusted shift start time
-        SalaryValue.Text = "Shift Duration: " & shiftDuration.ToString("hh\:mm\:ss")
-    End Sub
-
-    Private Sub PictureBox7_Click(sender As Object, e As EventArgs) Handles PictureBox7.Click
-        If Application.OpenForms.OfType(Of Form1)().Count() = 1 Then
-            Application.Exit()
-        Else
-            Me.Close()
+            MessageBox.Show(Me, "Shift has not started yet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
 
@@ -103,9 +83,7 @@ Public Class Form1
         dbConn.TestDatabaseConnection()
 
         If dbConn.TestDatabaseConnection Then
-            topMostForm.TopMost = True
-            MessageBox.Show(topMostForm, "SUCCESSFULLY CONNECTED TO DATABASE", "Caption", MessageBoxButtons.OK)
-            topMostForm.TopMost = False
+            MessageBox.Show(Me, "SUCCESSFULLY CONNECTED TO DATABASE", "Caption", MessageBoxButtons.OK)
 
             ' Load the first name into Label1
             LoadFirstNameIntoLabel()
@@ -124,16 +102,16 @@ Public Class Form1
                             originalLoggedInShiftStartTime = loggedInShiftStartTime
                             StartShift()
                         Else
-                            MessageBox.Show("You are logging in outside your scheduled shift. Shift won't start.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            MessageBox.Show(Me, "You are logging in outside your scheduled shift. Shift won't start.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                         End If
                     Else
-                        MessageBox.Show("Error parsing end time of the schedule.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        MessageBox.Show(Me, "Error parsing end time of the schedule.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End If
                 Else
-                    MessageBox.Show("Error parsing start time of the schedule.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show(Me, "Error parsing start time of the schedule.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
             Else
-                MessageBox.Show("Invalid schedule format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show(Me, "Invalid schedule format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End If
     End Sub
