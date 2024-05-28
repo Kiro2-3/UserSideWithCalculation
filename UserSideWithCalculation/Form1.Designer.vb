@@ -28,7 +28,6 @@ Partial Class Form1
         EndShiftButton = New Button()
         Timer1 = New Timer(components)
         LogoutButton = New Button()
-        PictureBox5 = New PictureBox()
         PictureBox2 = New PictureBox()
         Label1 = New Label()
         PictureBox14 = New PictureBox()
@@ -36,24 +35,24 @@ Partial Class Form1
         PictureBox1 = New PictureBox()
         PictureBox7 = New PictureBox()
         Label2 = New Label()
-        PictureBox3 = New PictureBox()
         Label3 = New Label()
-        Button1 = New Button()
-        CType(PictureBox5, ComponentModel.ISupportInitialize).BeginInit()
+        PictureBox8 = New PictureBox()
+        PictureBox3 = New PictureBox()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox14, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox7, ComponentModel.ISupportInitialize).BeginInit()
+        CType(PictureBox8, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox3, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' SalaryValue
         ' 
         SalaryValue.AutoSize = True
-        SalaryValue.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(128))
+        SalaryValue.BackColor = Color.White
         SalaryValue.Font = New Font("Segoe UI", 30F, FontStyle.Bold)
         SalaryValue.ForeColor = Color.Red
-        SalaryValue.Location = New Point(23, 361)
+        SalaryValue.Location = New Point(16, 393)
         SalaryValue.Name = "SalaryValue"
         SalaryValue.Size = New Size(394, 54)
         SalaryValue.TabIndex = 1
@@ -66,47 +65,33 @@ Partial Class Form1
         EndShiftButton.FlatAppearance.BorderSize = 3
         EndShiftButton.FlatStyle = FlatStyle.Flat
         EndShiftButton.Image = My.Resources.Resources.Vanilla_1x_3_7s_265px_56px__2_
-        EndShiftButton.Location = New Point(604, 454)
+        EndShiftButton.Location = New Point(509, 478)
         EndShiftButton.Name = "EndShiftButton"
-        EndShiftButton.Size = New Size(291, 59)
+        EndShiftButton.Size = New Size(336, 59)
         EndShiftButton.TabIndex = 2
         EndShiftButton.UseVisualStyleBackColor = True
         ' 
-        ' Timer1
-        ' 
-        ' 
         ' LogoutButton
         ' 
+        LogoutButton.BackColor = Color.Gold
         LogoutButton.FlatAppearance.BorderColor = Color.White
         LogoutButton.FlatAppearance.BorderSize = 3
         LogoutButton.FlatStyle = FlatStyle.Flat
         LogoutButton.Image = CType(resources.GetObject("LogoutButton.Image"), Image)
-        LogoutButton.Location = New Point(912, 454)
+        LogoutButton.Location = New Point(872, 478)
         LogoutButton.Name = "LogoutButton"
-        LogoutButton.Size = New Size(265, 59)
+        LogoutButton.Size = New Size(313, 59)
         LogoutButton.TabIndex = 4
-        LogoutButton.UseVisualStyleBackColor = True
-        ' 
-        ' PictureBox5
-        ' 
-        PictureBox5.BackColor = Color.DarkGreen
-        PictureBox5.Image = CType(resources.GetObject("PictureBox5.Image"), Image)
-        PictureBox5.Location = New Point(127, 54)
-        PictureBox5.Margin = New Padding(4, 3, 4, 3)
-        PictureBox5.Name = "PictureBox5"
-        PictureBox5.Size = New Size(131, 111)
-        PictureBox5.SizeMode = PictureBoxSizeMode.StretchImage
-        PictureBox5.TabIndex = 11
-        PictureBox5.TabStop = False
+        LogoutButton.UseVisualStyleBackColor = False
         ' 
         ' PictureBox2
         ' 
         PictureBox2.BackColor = Color.DarkGreen
         PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), Image)
-        PictureBox2.Location = New Point(935, 54)
+        PictureBox2.Location = New Point(924, 43)
         PictureBox2.Margin = New Padding(4, 3, 4, 3)
         PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(117, 111)
+        PictureBox2.Size = New Size(132, 131)
         PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox2.TabIndex = 13
         PictureBox2.TabStop = False
@@ -114,10 +99,10 @@ Partial Class Form1
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(128))
+        Label1.BackColor = Color.White
         Label1.Font = New Font("Arial Black", 50F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label1.ForeColor = Color.OrangeRed
-        Label1.Location = New Point(243, 181)
+        Label1.Location = New Point(422, 269)
         Label1.Name = "Label1"
         Label1.Size = New Size(140, 95)
         Label1.TabIndex = 15
@@ -168,53 +153,58 @@ Partial Class Form1
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(128))
+        Label2.BackColor = Color.White
         Label2.Font = New Font("Arial Black", 50F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label2.ForeColor = Color.Orange
-        Label2.Location = New Point(12, 180)
+        Label2.Location = New Point(16, 269)
         Label2.Name = "Label2"
         Label2.Size = New Size(252, 95)
         Label2.TabIndex = 30
         Label2.Text = "Hello!"
         ' 
-        ' PictureBox3
-        ' 
-        PictureBox3.BackColor = Color.FromArgb(CByte(0), CByte(64), CByte(0))
-        PictureBox3.Location = New Point(-7, 431)
-        PictureBox3.Name = "PictureBox3"
-        PictureBox3.Size = New Size(1205, 139)
-        PictureBox3.TabIndex = 31
-        PictureBox3.TabStop = False
-        ' 
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(128))
+        Label3.BackColor = Color.White
         Label3.Font = New Font("Arial Black", 25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label3.ForeColor = Color.Orange
-        Label3.Location = New Point(821, 180)
+        Label3.ForeColor = Color.Black
+        Label3.Location = New Point(829, 179)
         Label3.Name = "Label3"
         Label3.Size = New Size(356, 96)
         Label3.TabIndex = 32
         Label3.Text = "You are currently " & vbCrLf & "using CDMIPS"
         ' 
-        ' Button1
+        ' PictureBox8
         ' 
-        Button1.Location = New Point(423, 490)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(75, 23)
-        Button1.TabIndex = 33
-        Button1.Text = "Button1"
-        Button1.UseVisualStyleBackColor = True
+        PictureBox8.BackColor = Color.DarkGreen
+        PictureBox8.Image = CType(resources.GetObject("PictureBox8.Image"), Image)
+        PictureBox8.Location = New Point(111, 43)
+        PictureBox8.Name = "PictureBox8"
+        PictureBox8.Size = New Size(153, 131)
+        PictureBox8.SizeMode = PictureBoxSizeMode.StretchImage
+        PictureBox8.TabIndex = 33
+        PictureBox8.TabStop = False
+        ' 
+        ' PictureBox3
+        ' 
+        PictureBox3.BackColor = Color.White
+        PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), Image)
+        PictureBox3.Location = New Point(-7, 450)
+        PictureBox3.Name = "PictureBox3"
+        PictureBox3.Size = New Size(112, 101)
+        PictureBox3.SizeMode = PictureBoxSizeMode.StretchImage
+        PictureBox3.TabIndex = 34
+        PictureBox3.TabStop = False
         ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(128))
+        BackColor = Color.White
         ClientSize = New Size(1189, 549)
         ControlBox = False
-        Controls.Add(Button1)
+        Controls.Add(PictureBox3)
+        Controls.Add(PictureBox8)
         Controls.Add(LogoutButton)
         Controls.Add(EndShiftButton)
         Controls.Add(Label1)
@@ -223,22 +213,20 @@ Partial Class Form1
         Controls.Add(PictureBox7)
         Controls.Add(SalaryValue)
         Controls.Add(PictureBox14)
-        Controls.Add(PictureBox5)
         Controls.Add(PictureBox2)
         Controls.Add(Button3)
         Controls.Add(PictureBox1)
-        Controls.Add(PictureBox3)
         ForeColor = SystemColors.ControlText
         FormBorderStyle = FormBorderStyle.None
         MaximizeBox = False
         MinimizeBox = False
         Name = "Form1"
         Text = "Main UI"
-        CType(PictureBox5, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox14, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox7, ComponentModel.ISupportInitialize).EndInit()
+        CType(PictureBox8, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox3, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
@@ -247,7 +235,6 @@ Partial Class Form1
     Friend WithEvents EndShiftButton As Button
     Friend WithEvents Timer1 As Timer
     Friend WithEvents LogoutButton As Button
-    Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox14 As PictureBox
@@ -255,8 +242,8 @@ Partial Class Form1
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox7 As PictureBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents Button1 As Button
+    Friend WithEvents PictureBox8 As PictureBox
+    Friend WithEvents PictureBox3 As PictureBox
 
 End Class

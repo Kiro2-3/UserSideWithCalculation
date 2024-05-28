@@ -2,7 +2,7 @@
 
 Public Class DatabaseConnection
     Public Function TestDatabaseConnection() As Boolean
-        Dim connectionString As String = "server=localhost;user=root;database=cdmips;port=3306;password="
+        Dim connectionString As String = "server=localhost;user=root;database=cdmips; port=3306;password="
 
         Try
             Using connection = New MySqlConnection(connectionString)
