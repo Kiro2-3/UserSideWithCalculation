@@ -38,6 +38,7 @@ Partial Class Form1
         Label2 = New Label()
         PictureBox3 = New PictureBox()
         Label3 = New Label()
+        Button1 = New Button()
         CType(PictureBox5, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox14, ComponentModel.ISupportInitialize).BeginInit()
@@ -65,11 +66,11 @@ Partial Class Form1
         EndShiftButton.FlatAppearance.BorderSize = 3
         EndShiftButton.FlatStyle = FlatStyle.Flat
         EndShiftButton.Image = My.Resources.Resources.Vanilla_1x_3_7s_265px_56px__2_
-        EndShiftButton.Location = New Point(602, 454)
+        EndShiftButton.Location = New Point(604, 454)
         EndShiftButton.Name = "EndShiftButton"
         EndShiftButton.Size = New Size(291, 59)
         EndShiftButton.TabIndex = 2
-        EndShiftButton.UseVisualStyleBackColor = False
+        EndShiftButton.UseVisualStyleBackColor = True
         ' 
         ' Timer1
         ' 
@@ -197,6 +198,15 @@ Partial Class Form1
         Label3.TabIndex = 32
         Label3.Text = "You are currently " & vbCrLf & "using CDMIPS"
         ' 
+        ' Button1
+        ' 
+        Button1.Location = New Point(423, 490)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(75, 23)
+        Button1.TabIndex = 33
+        Button1.Text = "Button1"
+        Button1.UseVisualStyleBackColor = True
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -204,6 +214,7 @@ Partial Class Form1
         BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(128))
         ClientSize = New Size(1189, 549)
         ControlBox = False
+        Controls.Add(Button1)
         Controls.Add(LogoutButton)
         Controls.Add(EndShiftButton)
         Controls.Add(Label1)
@@ -246,5 +257,6 @@ Partial Class Form1
     Friend WithEvents Label2 As Label
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents Label3 As Label
+    Friend WithEvents Button1 As Button
 
 End Class

@@ -16,8 +16,10 @@ Public Class Form1
     Private schedule As String = ""
     Dim login As New Login
     Private connectionString As String = "server=localhost;user=root;database=cdmips;port=3306;password="
+    Dim topMostForm As Form = CType(Application.OpenForms(0), Form)
 
     Private Shared instances As New Dictionary(Of String, Form1)
+
 
     Public Sub New(ByVal userID As String, ByVal userSchedule As String)
         InitializeComponent()
@@ -73,6 +75,9 @@ Public Class Form1
             EndShiftButton.Enabled = False
         Else
             MessageBox.Show("Shift has not started yet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            topMostForm.TopMost = True
+            MessageBox.Show(topMostForm, "Your message", "Caption", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            topMostForm.TopMost = False
         End If
     End Sub
 
@@ -98,7 +103,9 @@ Public Class Form1
         dbConn.TestDatabaseConnection()
 
         If dbConn.TestDatabaseConnection Then
-            MessageBox.Show("Successfully connected to the database.")
+            topMostForm.TopMost = True
+            MessageBox.Show(topMostForm, "SUCCESSFULLY CONNECTED TO DATABASE", "Caption", MessageBoxButtons.OK)
+            topMostForm.TopMost = False
 
             ' Load the first name into Label1
             LoadFirstNameIntoLabel()
@@ -165,4 +172,7 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+    End Sub
 End Class
